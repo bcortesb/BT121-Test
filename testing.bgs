@@ -54,7 +54,7 @@ const reset_button_pin_nbr_PB12		= 12
 event system_boot(major, minor, patch, build, bootloader, hw)
 
 	# Write welcome message to UART interface at boot
-    call endpoint_send(0,20,"TEST START\r\n")
+    call endpoint_send(0,12,"TEST START\r\n")
 
     # By default stream data to DROP endpoint meaning the data will be ignored
     call endpoint_set_streaming_destination(3,31)
@@ -68,7 +68,7 @@ event system_initialized(addr)
 	count=0
 	
 	# Set local Bluetooth friendly name for Bluetooth classic
-    call system_set_local_name(18,"TEST DEMO")
+    call system_set_local_name(9,"TEST DEMO")
 	
 	# Start RFCOMM (SPP) server with SDP ID 2
     call bt_rfcomm_start_server(2,0)
@@ -114,7 +114,7 @@ event endpoint_status(endpoint,type,destination,flags)
         call endpoint_send(0,15,"SPP CONNECTED\r\n")
         
         # Send a welcome message to Bluetooth SPP connection
-        call endpoint_send(endpoint,29,"Connected to TEST DEMO\r\n")
+        call endpoint_send(endpoint,25,"Connected to TEST DEMO\r\n")
         
         # Configure data streaming from UART to SPP connection - enable transparent SPP mode
         call endpoint_set_streaming_destination(0,endpoint)
@@ -156,7 +156,8 @@ event hardware_soft_timer(handle)
 			count = 0
 		end if
 		
-		call endpoint_send(0,1,count)
+		call endpoint_send(0,8,count)
+		call endpoint_send(rep,8,count)
 
 		
     end if
