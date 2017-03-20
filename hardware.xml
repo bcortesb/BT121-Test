@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<hardware>
+	<!-- adc input: PA7 as AI interface for the StrainGage -->
+    <adc inputs="0x80" />
+
+    <!-- Sleep modes disabled -->
+    <sleep enabled="false"/>
+
+    <!-- UART enabled @115200bps -->
+    <uart baud="115200" flowcontrol="false" bgapi="false" />
+
+    <!-- SPI enabled for dev.kit display -->
+    <!--<spi channel="1" alternate="2" clock_idle_polarity="high" clock_edge="1" endianness="msb" divisor="256" />
+-->
+    <!-- I/O configuration -->
+	<!-- Output leds:
+			- PB3: Bluetooth connection (Blue)
+			- PB4: TX (green)
+			- PB5: Disc. (red)
+		 Input:
+			- PB6: Reset
+			-->
+    <!-- Output-->
+	<port index="1"  output="0x1700" />
+	<!-- Input-->
+    <port index="1"  input="0x40" />
+	<!-- Disabled ports-->
+	<port index="0" pulldown="0xFF" />
+	<port index="1" pulldown="0xFF" />
+	
+	
+
+</hardware>
