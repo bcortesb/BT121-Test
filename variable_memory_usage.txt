@@ -1,4 +1,4 @@
-406
+156
 0:0	ENDPOINT_FLAG_ACTIVE
 0:0	ENDPOINT_FLAG_BGAPI
 0:0	ENDPOINT_FLAG_CLOSING
@@ -184,19 +184,19 @@
 128:5	tmp
 133:4	offset
 137:4	connected
-141:252	hr_data
-393:5	test
-398:4	value
-402:4	pos
-406:0	led_port_PB8
-406:0	led_mask_PB8
-406:0	led_pin_nbr_PB8
-406:0	led_port_PB9
-406:0	led_mask_PB9
-406:0	led_pin_nbr_PB9
-406:0	led_port_PB10
-406:0	led_mask_PB10
-406:0	led_pin_nbr_PB10
-406:0	reset_button_port_PB12
-406:0	reset_button_mask_PB12
-406:0	reset_button_pin_nbr_PB12
+141:2	hr_data
+143:5	test
+148:4	value
+152:4	pos
+156:0	led_port_PB8
+156:0	led_mask_PB8
+156:0	led_pin_nbr_PB8
+156:0	led_port_PB9
+156:0	led_mask_PB9
+156:0	led_pin_nbr_PB9
+156:0	led_port_PB10
+156:0	led_mask_PB10
+156:0	led_pin_nbr_PB10
+156:0	reset_button_port_PB12
+156:0	reset_button_mask_PB12
+156:0	reset_button_pin_nbr_PB12

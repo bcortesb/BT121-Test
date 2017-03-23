@@ -23,7 +23,7 @@ dim offset
 dim connected
 
 #max (for the buffer): 256 bytes. Store every 2ms till 126ms
-dim hr_data(252)
+dim hr_data(2)
 
 #for testing
 dim test(5)
@@ -66,6 +66,8 @@ end
 event system_initialized(addr)
 	#FOR TEST
 	count=0
+	tmp(0:1)=0
+	adcvalue = 0
 	
 	# Set local Bluetooth friendly name for Bluetooth classic
     call system_set_local_name(9,"TEST DEMO")
@@ -93,7 +95,7 @@ event system_initialized(addr)
 	# 2 ms -> 500Hz -> Frequency for ECG read
 	
 	# start another timer: for testing
-    call hardware_set_soft_timer(21,2,0)    # interval = 21 ms, handle = 2, timer is repeating
+    call hardware_set_soft_timer(500,2,0)    # interval = 21 ms, handle = 2, timer is repeating
 	
     # set connectable and discoverable mode
     call le_gap_set_mode(le_gap_general_discoverable, le_gap_undirected_connectable)
@@ -112,7 +114,7 @@ event endpoint_status(endpoint,type,destination,flags)
 
         # Write a message to UART interface to indicate SPP connection
         call endpoint_send(0,15,"SPP CONNECTED\r\n")
-        
+
         # Send a welcome message to Bluetooth SPP connection
         call endpoint_send(endpoint,25,"Connected to TEST DEMO\r\n")
         
@@ -139,27 +141,39 @@ end
 event hardware_soft_timer(handle)
     
 	if handle = 1 then
-        			
+
     end if
 	
 
 	if handle = 2 then
 		
+		
+
 	end if
 	
     if handle = 0 then
+		adcvalue = adcvalue + 15
+		hr_data(0:1) = 0
+		hr_data(1:1) = adcvalue
 		if count = 0 then
 			call hardware_write_gpio(led_port_PB8,led_mask_PB8,led_mask_PB8)
 			count = 1
+			# hr_data(0:1) = 0
+			# hr_data(1:1) =
+			
 		else
 			call hardware_write_gpio(led_port_PB8,led_mask_PB8,$0000)
 			count = 0
+			# hr_data(0:1) = 0
+			# hr_data(1:1) = 150
+		end if	
+		if adcvalue > 150 then
+			adcvalue = 15
 		end if
 		
-		call endpoint_send(0,8,count)
-		call endpoint_send(rep,8,count)
-
-		
+		call endpoint_send(0,2,hr_data(:))
+		# call endpoint_send(rep,8,count)
+		call gatt_server_send_characteristic_notification($ff, xgatt_hr, 2, hr_data(0:2))
     end if
 
 end
